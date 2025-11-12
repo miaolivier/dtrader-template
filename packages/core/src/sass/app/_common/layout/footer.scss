@@ -54,7 +54,6 @@
         }
     }
     &__link {
-        padding: 0 0.8em;
         text-decoration: none;
         height: 100%;
         display: inline-flex;
@@ -109,7 +108,6 @@
         background: var(--color-surface-primary);
         width: 1em;
         height: 1em;
-        margin: 0.2em 1.6em;
         border-radius: 50%;
 
         &--online {
