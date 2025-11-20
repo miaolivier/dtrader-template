@@ -55,6 +55,8 @@ describe('<Sidebar />', () => {
         },
         portfolio: {
             active_positions_count: 0,
+            onMount: jest.fn(),
+            onUnmount: jest.fn(),
         },
         common: {
             current_language: 'en',

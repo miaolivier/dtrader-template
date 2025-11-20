@@ -121,7 +121,6 @@ export const PositionsDrawerContent = observer(({ ...props }) => {
         all_positions,
         error,
         onHoverPosition,
-        onMount,
         onClickCancel,
         onClickSell,
         removePositionById: onClickRemove,
@@ -141,9 +140,7 @@ export const PositionsDrawerContent = observer(({ ...props }) => {
     // This ensures heights are recalculated only after translations have loaded
     const translated_stake_label = localize('Stake:');
 
-    React.useEffect(() => {
-        onMount();
-    }, [onMount]);
+    // Removed onMount() call - now handled at sidebar level to ensure subscription is always active
 
     React.useEffect(() => {
         list_ref?.current?.scrollTo({ top: 0 });

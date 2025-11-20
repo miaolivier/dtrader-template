@@ -14,7 +14,7 @@ import {
 } from '@deriv/quill-icons';
 import { routes } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
-import { localize, useTranslations } from '@deriv-com/translations';
+import { Localize, localize, useTranslations } from '@deriv-com/translations';
 
 import { PositionsDrawerContent, PositionsDrawerFooter } from '../../Elements/PositionsDrawer';
 
@@ -36,9 +36,14 @@ const Sidebar = observer(() => {
     const { currentLang } = useTranslations();
     const { is_dark_mode_on, active_sidebar_flyout, setSidebarFlyout, closeSidebarFlyout } = ui;
     const { is_logged_in } = client;
-    const { active_positions_count } = portfolio;
+    const { active_positions_count, onMount, onUnmount } = portfolio;
     const location = useLocation();
     const history = useHistory();
+
+    React.useEffect(() => {
+        onMount();
+        return () => onUnmount();
+    }, [onMount, onUnmount]);
 
     const isActiveRoute = (path: string) => {
         if (path === routes.index) {
@@ -129,19 +134,19 @@ const Sidebar = observer(() => {
         switch (active_sidebar_flyout) {
             case 'language':
                 return {
-                    title: localize('Language'),
+                    title: <Localize i18n_default_text='Language' />,
                     content: <LanguageSelector />,
                     footer: null,
                 };
             case 'account':
                 return {
-                    title: localize('Account'),
+                    title: <Localize i18n_default_text='Account' />,
                     content: <AccountSelector />,
                     footer: null,
                 };
             case 'positions':
                 return {
-                    title: localize('Open positions'),
+                    title: <Localize i18n_default_text='Open positions' />,
                     content: <PositionsDrawerContent />,
                     footer: <PositionsDrawerFooter />,
                 };
@@ -214,7 +219,7 @@ const Sidebar = observer(() => {
             <Flyout
                 is_open={active_sidebar_flyout !== null}
                 onClose={closeFlyout}
-                title={flyoutContent?.title || ''}
+                title={flyoutContent?.title}
                 footer_content={flyoutContent?.footer}
             >
                 {flyoutContent?.content}

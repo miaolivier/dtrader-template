@@ -8,7 +8,7 @@ import Text from '../text/text';
 type TFlyout = {
     is_open: boolean;
     onClose: () => void;
-    title?: string;
+    title?: string | React.ReactNode;
     header_content?: React.ReactNode;
     footer_content?: React.ReactNode;
     children: React.ReactNode;
