@@ -1,18 +1,19 @@
 import React from 'react';
 
-import { LabelPairedPresentationScreenSmRegularIcon } from '@deriv/quill-icons';
+import { LabelPairedChevronRightSmRegularIcon } from '@deriv/quill-icons';
+import { trackAnalyticsEvent } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
-import { Localize } from '@deriv-com/translations';
 import { Button, Text } from '@deriv-com/quill-ui';
+import { Localize } from '@deriv-com/translations';
 
 import useGuideContractTypes from 'AppV2/Hooks/useGuideContractTypes';
 import { AVAILABLE_CONTRACTS, CONTRACT_LIST } from 'AppV2/Utils/trade-types-utils';
 import { useTraderStore } from 'Stores/useTraderStores';
 
-import { trackAnalyticsEvent } from '@deriv/shared';
-
 import GuideDefinitionModal from './guide-definition-modal';
 import GuideDescriptionModal from './guide-description-modal';
+
+import './guide.scss';
 
 type TGuide = {
     has_label?: boolean;
@@ -78,9 +79,8 @@ const Guide = observer(
         return (
             <React.Fragment>
                 {show_trigger_button && (
-                    <Button
-                        color={is_dark_mode_on ? 'white' : 'black'}
-                        icon={<LabelPairedPresentationScreenSmRegularIcon key='guide-button-icon' />}
+                    <div
+                        className='guide-link'
                         onClick={() => {
                             trackAnalyticsEvent('ce_trade_types_form_v2', {
                                 action: 'info_open',
@@ -88,15 +88,15 @@ const Guide = observer(
                             });
                             setIsDescriptionOpened(true);
                         }}
-                        variant={has_label ? 'secondary' : 'tertiary'}
-                        key={current_language}
                     >
-                        {has_label && (
-                            <Text size='sm' bold color='quill-typography__color--prominent'>
-                                <Localize i18n_default_text='Guide' />
-                            </Text>
-                        )}
-                    </Button>
+                        <Text size='sm' color='quill-typography__color--prominent'>
+                            <Localize
+                                i18n_default_text='How to trade {{trade_type}}?'
+                                values={{ trade_type: contract_type_title || 'this' }}
+                            />
+                        </Text>
+                        <LabelPairedChevronRightSmRegularIcon />
+                    </div>
                 )}
                 <GuideDescriptionModal
                     contract_list={ordered_contract_list}

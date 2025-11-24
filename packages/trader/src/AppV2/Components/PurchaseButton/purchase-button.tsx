@@ -240,10 +240,14 @@ const PurchaseButton = observer(() => {
                                 <Button
                                     color={getButtonType(index, trade_type)}
                                     size='lg'
-                                    label={getContractTypeDisplay(trade_type, {
-                                        isHighLow: is_high_low,
-                                        showButtonName: true,
-                                    })}
+                                    label={
+                                        is_single_button
+                                            ? 'Buy'
+                                            : getContractTypeDisplay(trade_type, {
+                                                  isHighLow: is_high_low,
+                                                  showButtonName: true,
+                                              })
+                                    }
                                     fullWidth
                                     className={clsx(
                                         'purchase-button',

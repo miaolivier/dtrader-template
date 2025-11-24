@@ -25,11 +25,13 @@ export const DURATION_UNIT = {
 
 export const getTradeParams = (symbol?: string, has_cancellation?: boolean) => ({
     [TRADE_TYPES.RISE_FALL]: {
+        trade_type_tabs: true,
         duration: true,
         stake: true,
         allow_equals: true,
     },
     [TRADE_TYPES.RISE_FALL_EQUAL]: {
+        trade_type_tabs: true,
         duration: true,
         stake: true,
         allow_equals: true,
@@ -148,6 +150,7 @@ export const getTradeTypeTabsList = (contract_type = '') => {
     const is_vanilla = isVanillaContract(contract_type);
     const is_high_low = contract_type === TRADE_TYPES.HIGH_LOW;
     const is_touch = isTouchContract(contract_type);
+    const is_rise_fall = contract_type === TRADE_TYPES.RISE_FALL || contract_type === TRADE_TYPES.RISE_FALL_EQUAL;
     const tab_list = [
         {
             label: 'Up',
@@ -191,6 +194,18 @@ export const getTradeTypeTabsList = (contract_type = '') => {
             value: TRADE_TYPES.TOUCH,
             contract_type: CONTRACT_TYPES.TOUCH.NO_TOUCH,
             is_displayed: is_touch,
+        },
+        {
+            label: 'Rise',
+            value: TRADE_TYPES.RISE_FALL,
+            contract_type: CONTRACT_TYPES.CALL,
+            is_displayed: is_rise_fall,
+        },
+        {
+            label: 'Fall',
+            value: TRADE_TYPES.RISE_FALL,
+            contract_type: CONTRACT_TYPES.PUT,
+            is_displayed: is_rise_fall,
         },
     ];
     return tab_list.filter(({ is_displayed }) => is_displayed);

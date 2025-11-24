@@ -1,8 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { Localize } from '@deriv-com/translations';
 import { Text } from '@deriv-com/quill-ui';
+import { Localize } from '@deriv-com/translations';
 
 import Guide from '../Guide';
 
@@ -26,9 +26,6 @@ const TradeParametersContainer = ({
         >
             {!is_minimized_and_visible && (
                 <div className='trade-params__title'>
-                    <Text>
-                        <Localize i18n_default_text='Set your trade' />
-                    </Text>
                     <Guide has_label show_guide_for_selected_contract />
                 </div>
             )}
