@@ -103,16 +103,26 @@ export const getRowAction = (row_obj: TSource | TRow): TAction => {
               }
             : getContractPath(id);
     } else if (action_type === 'withdrawal') {
-        if (withdrawal_details && longcode) {
+        // For withdrawal: show details only if withdrawal_details or longcode exists
+        if ((withdrawal_details && longcode) || desc) {
             action = {
-                message: `${withdrawal_details} ${longcode}`,
+                message: withdrawal_details && longcode ? `${withdrawal_details} ${longcode}` : desc,
             };
         } else {
-            action = {
-                message: desc,
-            };
+            // No details available, make row non-clickable
+            return { disabled: true } as any;
         }
-    } else if (desc && ['deposit', 'transfer', 'adjustment', 'hold', 'release'].includes(action_type)) {
+    } else if (action_type === 'deposit') {
+        // For deposit: show details only if desc/longcode exists
+        if (desc || longcode) {
+            action = {
+                message: desc || longcode,
+            };
+        } else {
+            // No details available, make row non-clickable
+            return { disabled: true } as any;
+        }
+    } else if (desc && ['transfer', 'adjustment', 'hold', 'release'].includes(action_type)) {
         action = {
             message: desc,
         };
