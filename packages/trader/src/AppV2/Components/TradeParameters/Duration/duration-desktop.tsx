@@ -7,11 +7,12 @@ import { Localize } from '@deriv-com/translations';
 
 import { useTraderStore } from 'Stores/useTraderStores';
 
-import { InputPopover, ValueChips, TabSelector } from '../../InputPopover';
+import { InputPopover, TabSelector, ValueChips } from '../../InputPopover';
 
-import DurationUnitSelector from './duration-unit-selector';
-import DurationInputDesktop from './duration-input-desktop';
+import DurationEndTimeDesktop from './duration-end-time-desktop';
 import DurationHoursInputDesktop from './duration-hours-input-desktop';
+import DurationInputDesktop from './duration-input-desktop';
+import DurationUnitSelector from './duration-unit-selector';
 
 const DURATION_TICK_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const DURATION_SECONDS_VALUES = [15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
@@ -33,7 +34,17 @@ const DurationDesktop: React.FC<DurationDesktopProps> = observer(({ is_minimized
 
     const handleOpenPopover = useCallback(() => {
         setIsPopoverOpen(true);
-        setSelectedUnit(duration_unit === 's' ? 's' : duration_unit === 'm' ? 'm' : duration_unit === 'h' ? 'h' : 't'); // Default to current unit or ticks
+        setSelectedUnit(
+            duration_unit === 's'
+                ? 's'
+                : duration_unit === 'm'
+                  ? 'm'
+                  : duration_unit === 'h'
+                    ? 'h'
+                    : duration_unit === 'end_time'
+                      ? 'end_time'
+                      : 't'
+        );
         setSelectedDuration(duration);
         setActiveTab('chips'); // Always start with chips tab
     }, [duration, duration_unit]);
@@ -192,6 +203,8 @@ const DurationDesktop: React.FC<DurationDesktopProps> = observer(({ is_minimized
                                 ) : (
                                     <DurationHoursInputDesktop onClose={handleClosePopover} />
                                 )
+                            ) : selectedUnit === 'end_time' ? (
+                                <DurationEndTimeDesktop onClose={handleClosePopover} />
                             ) : (
                                 <div className='duration-popover__coming-soon'>
                                     <Text size='md' color='quill-typography-default'>
