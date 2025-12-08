@@ -279,7 +279,15 @@ export default class ContractTradeStore extends BaseStore {
         if (!trade_type || !underlying) {
             return [];
         }
-        let { trade_types } = getContractTypesConfig()[trade_type];
+        // Guard against invalid/corrupted trade_type from sessionStorage.
+        // This prevents crashes when:
+        // 1. Race condition: trade_type not initialized yet (empty string)
+        // 2. Stale data: invalid URL params persisted from previous session
+        const contract_config = getContractTypesConfig()[trade_type];
+        if (!contract_config || !contract_config.trade_types) {
+            return [];
+        }
+        let { trade_types } = contract_config;
         const is_call_put = isCallPut(trade_type);
         if (is_call_put) {
             // treat CALLE/PUTE and CALL/PUT the same
