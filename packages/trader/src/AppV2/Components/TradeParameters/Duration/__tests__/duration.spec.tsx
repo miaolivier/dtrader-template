@@ -1,7 +1,5 @@
-import React from 'react';
 import moment from 'moment';
 
-import { toMoment } from '@deriv/shared';
 import { mockStore } from '@deriv/stores';
 import { TCoreStores } from '@deriv/stores/types';
 import { useSnackbar } from '@deriv-com/quill-ui';
@@ -41,6 +39,7 @@ jest.mock('@deriv/shared', () => ({
         clone: jest.fn(),
         isSame: jest.fn(() => true),
     })),
+    isMobile: jest.fn(() => false), // Default to desktop mode
 }));
 
 jest.mock('../day', () => ({
@@ -106,17 +105,21 @@ describe('Duration', () => {
         default_trade_store.modules.trade.duration = 125;
         mockDuration();
         expect(screen.getByLabelText('Duration')).toBeInTheDocument();
-        expect(screen.getByDisplayValue('2 hours 5 minutes')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('2 hr 5 min')).toBeInTheDocument();
     });
 
-    it('should open the ActionSheet when the text field is clicked', async () => {
+    it('should open the popover when the text field is clicked (desktop)', async () => {
         default_trade_store.modules.trade.expiry_time = '12:30';
         mockDuration();
         const textField = screen.getByLabelText('Duration');
         expect(textField).toBeInTheDocument();
         await userEvent.click(textField);
 
-        expect(screen.getByRole('dialog')).toBeInTheDocument();
+        // Desktop uses popover, not ActionSheet dialog
+        expect(screen.getByText('Ticks')).toBeInTheDocument();
+        expect(screen.getByText('Seconds')).toBeInTheDocument();
+        expect(screen.getByText('Minutes')).toBeInTheDocument();
+        expect(screen.getByText('Hours')).toBeInTheDocument();
     });
 
     it('should display a validation error message if there is a duration error', () => {
@@ -162,7 +165,7 @@ describe('Duration', () => {
         const textField = screen.getByLabelText('Duration');
         await userEvent.click(textField);
 
-        expect(screen.getByDisplayValue('2 hours 5 minutes')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('2 hr 5 min')).toBeInTheDocument();
     });
 
     it('should update saved_expiry_date when expiry_epoch changes to a different date', () => {
@@ -227,5 +230,93 @@ describe('Duration', () => {
 
         // Verify Accumulator's date is set
         expect(default_trade_store.modules.trade.setSavedExpiryDateV2).toHaveBeenCalledWith('2026-10-15');
+    });
+});
+
+describe('Duration - Mobile', () => {
+    let default_trade_store: TCoreStores, mockOnChangeMultiple: jest.Mock;
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { isMobile } = require('@deriv/shared');
+    const mockAddSnackbar = jest.fn();
+
+    beforeAll(() => {
+        (useSnackbar as jest.Mock).mockReturnValue({ addSnackbar: mockAddSnackbar });
+    });
+
+    beforeEach(() => {
+        // Mock isMobile to return true for mobile tests
+        (isMobile as jest.Mock).mockReturnValue(true);
+
+        mockOnChangeMultiple = jest.fn();
+        default_trade_store = mockStore({
+            modules: {
+                trade: {
+                    onChange: jest.fn(),
+                    validation_errors: { duration: [] },
+                    duration: 30,
+                    duration_unit: 'm',
+                    expiry_type: 'duration',
+                    expiry_time: '',
+                    proposal_info: {},
+                    onChangeMultiple: mockOnChangeMultiple,
+                    duration_min_max: {
+                        tick: { min: 1, max: 10 },
+                        intraday: { min: 60, max: 3600 },
+                        daily: { min: 86400, max: 172800 },
+                    },
+                    start_time: null,
+                    symbol: 'EURUSD',
+                    saved_expiry_date_v2: '',
+                    setSavedExpiryDateV2: jest.fn(),
+                    setUnsavedExpiryDateV2: jest.fn(),
+                    unsaved_expiry_date_v2: '',
+                },
+            },
+            common: {
+                server_time: moment('2024-10-10T11:23:10.895Z'),
+            },
+        });
+    });
+
+    afterEach(() => {
+        // Reset mock after each test
+        (isMobile as jest.Mock).mockReturnValue(false);
+    });
+
+    const mockDurationMobile = () => {
+        render(
+            <TraderProviders store={default_trade_store}>
+                <Duration />
+            </TraderProviders>
+        );
+    };
+
+    it('should render the correct value for duration in hours and minutes (mobile)', () => {
+        default_trade_store.modules.trade.duration = 125;
+        mockDurationMobile();
+        expect(screen.getByLabelText('Duration')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('2 hours 5 minutes')).toBeInTheDocument();
+    });
+
+    it('should open the ActionSheet when the text field is clicked (mobile)', async () => {
+        default_trade_store.modules.trade.expiry_time = '12:30';
+        mockDurationMobile();
+        const textField = screen.getByLabelText('Duration');
+        expect(textField).toBeInTheDocument();
+        await userEvent.click(textField);
+
+        // Mobile uses ActionSheet with dialog role
+        expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    it('should update the selected hour and unit when the component is opened (mobile)', async () => {
+        default_trade_store.modules.trade.duration_unit = 'm';
+        default_trade_store.modules.trade.duration = 125;
+        mockDurationMobile();
+
+        const textField = screen.getByLabelText('Duration');
+        await userEvent.click(textField);
+
+        expect(screen.getByDisplayValue('2 hours 5 minutes')).toBeInTheDocument();
     });
 });

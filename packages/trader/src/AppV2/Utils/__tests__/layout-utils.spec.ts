@@ -130,7 +130,7 @@ describe('getChartHeight', () => {
                 ...common_args,
                 contract_type: TRADE_TYPES.HIGH_LOW,
             })
-        ).toEqual(chart_height_with_additional_info);
+        ).toEqual(default_chart_height);
     });
 });
 

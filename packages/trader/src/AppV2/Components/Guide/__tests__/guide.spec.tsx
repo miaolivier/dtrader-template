@@ -12,6 +12,11 @@ import { AVAILABLE_CONTRACTS, CONTRACT_LIST } from 'AppV2/Utils/trade-types-util
 import TraderProviders from '../../../../trader-providers';
 import Guide from '../guide';
 
+jest.mock('@deriv-com/ui', () => ({
+    ...jest.requireActual('@deriv-com/ui'),
+    useDevice: jest.fn(() => ({ isMobile: false })),
+}));
+
 const trade_types = 'Trade types';
 
 const mock_contract_data = [
@@ -127,9 +132,9 @@ describe('Guide', () => {
     it('should render component with label and if user clicks on it, should show available contract information', async () => {
         renderGuide();
 
-        expect(screen.getByText('Guide')).toBeInTheDocument();
+        expect(screen.getByText(/How to trade Rise\/Fall\?/)).toBeInTheDocument();
 
-        await userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByText(/How to trade Rise\/Fall\?/));
 
         expect(screen.getByText(trade_types)).toBeInTheDocument();
         AVAILABLE_CONTRACTS.forEach(({ id }) => expect(screen.getByText(id)).toBeInTheDocument());
@@ -138,7 +143,7 @@ describe('Guide', () => {
     it('should render component with description for only for selected trade type if show_guide_for_selected_contract === true', async () => {
         renderGuide({ show_guide_for_selected_contract: true });
 
-        await userEvent.click(screen.getByRole('button'));
+        await userEvent.click(screen.getByText(/How to trade Rise\/Fall\?/));
 
         expect(screen.queryByText(trade_types)).not.toBeInTheDocument();
         expect(screen.getByText(CONTRACT_LIST.RISE_FALL)).toBeInTheDocument();
@@ -156,7 +161,7 @@ describe('Guide', () => {
         const term_definition = 'You can choose a growth rate with values of 1%, 2%, 3%, 4%, and 5%.';
         expect(screen.queryByText(term_definition)).not.toBeInTheDocument();
 
-        await userEvent.click(screen.getByText('Guide'));
+        await userEvent.click(screen.getByText(/How to trade Rise\/Fall\?/));
         await userEvent.click(screen.getByText(CONTRACT_LIST.ACCUMULATORS));
         await userEvent.click(screen.getByRole('button', { name: getTerm().GROWTH_RATE.toLowerCase() }));
 
