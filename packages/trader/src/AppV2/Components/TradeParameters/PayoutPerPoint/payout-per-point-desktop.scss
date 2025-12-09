@@ -1,0 +1,51 @@
+.payout-per-point-popover {
+    position: fixed;
+    width: 16rem !important;
+    height: auto !important;
+    background: var(--semantic-color-slate-solid-surface-frame-low);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--core-borderRadius-400, 8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1001;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 0.8rem;
+    }
+
+    &__option {
+        width: 14.4rem;
+        height: 4.8rem;
+        border: none;
+        border-radius: 0.8rem;
+        font-size: 1.6rem;
+        font-weight: 400;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background-color: transparent;
+        color: var(--component-textIcon-normal-default);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover:not(&--selected) {
+            background: var(--component-segmentedControl-bg-single-item-hover);
+            transform: scale(1.02);
+        }
+
+        &--selected {
+            background-color: var(--semantic-color-slate-solid-surface-inverse-lowest);
+            color: var(--component-textIcon-inverse-prominent);
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+    }
+}
