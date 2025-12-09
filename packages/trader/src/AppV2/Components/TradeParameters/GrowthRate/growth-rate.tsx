@@ -4,8 +4,8 @@ import { observer } from 'mobx-react-lite';
 
 import { Skeleton } from '@deriv/components';
 import { CONTRACT_TYPES, getGrowthRatePercentage, isEmptyObject } from '@deriv/shared';
-import { Localize } from '@deriv-com/translations';
 import { ActionSheet, TextField } from '@deriv-com/quill-ui';
+import { Localize } from '@deriv-com/translations';
 
 import Carousel from 'AppV2/Components/Carousel';
 import CarouselHeader from 'AppV2/Components/Carousel/carousel-header';
@@ -15,7 +15,10 @@ import { useTraderStore } from 'Stores/useTraderStores';
 
 import { TTradeParametersProps } from '../trade-parameters';
 
+import GrowthRateDesktop from './growth-rate-desktop';
 import GrowthRatePicker from './growth-rate-picker';
+
+import './growth-rate-desktop.scss';
 
 const GrowthRate = observer(({ is_minimized }: TTradeParametersProps) => {
     const {
@@ -28,12 +31,14 @@ const GrowthRate = observer(({ is_minimized }: TTradeParametersProps) => {
         maximum_ticks,
         onChange,
         proposal_info,
+        root_store,
         setV2ParamsInitialValues,
         tick_size_barrier_percentage,
         v2_params_initial_values,
     } = useTraderStore();
 
     const [is_open, setIsOpen] = React.useState(false);
+    const is_mobile = root_store?.ui?.is_mobile;
     const is_small_screen = isSmallScreen();
     const info = proposal_info?.[CONTRACT_TYPES.ACCUMULATOR] || {};
     const is_proposal_data_available =
@@ -90,6 +95,12 @@ const GrowthRate = observer(({ is_minimized }: TTradeParametersProps) => {
                 <Skeleton />
             </div>
         );
+    // Render desktop version with InputPopover for non-mobile devices
+    if (!is_mobile) {
+        return <GrowthRateDesktop is_minimized={is_minimized} />;
+    }
+
+    // Render mobile version with ActionSheet (unchanged)
     return (
         <>
             <TextField
