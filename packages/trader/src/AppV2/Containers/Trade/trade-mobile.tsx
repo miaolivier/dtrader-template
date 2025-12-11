@@ -8,12 +8,10 @@ import { getSymbolDisplayName, trackAnalyticsEvent } from '@deriv/shared';
 import { useStore } from '@deriv/stores';
 
 import AccumulatorStats from 'AppV2/Components/AccumulatorStats';
-import ClosedMarketMessage from 'AppV2/Components/ClosedMarketMessage';
 import CurrentSpot from 'AppV2/Components/CurrentSpot';
 import MarketSelector from 'AppV2/Components/MarketSelector';
 import OnboardingGuide from 'AppV2/Components/OnboardingGuide/GuideForPages';
 import PurchaseButton from 'AppV2/Components/PurchaseButton';
-import ServiceErrorSheet from 'AppV2/Components/ServiceErrorSheet';
 import TradeErrorSnackbar from 'AppV2/Components/TradeErrorSnackbar';
 import { TradeParameters, TradeParametersContainer } from 'AppV2/Components/TradeParameters';
 import useContractsFor from 'AppV2/Hooks/useContractsFor';

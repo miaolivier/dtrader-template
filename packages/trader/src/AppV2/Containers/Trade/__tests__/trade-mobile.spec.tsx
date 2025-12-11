@@ -52,9 +52,6 @@ jest.mock('@deriv-com/ui', () => ({
 jest.mock('AppV2/Components/AccumulatorStats', () =>
     jest.fn(() => <div data-testid='accumulator-stats'>AccumulatorStats</div>)
 );
-jest.mock('AppV2/Components/ClosedMarketMessage', () =>
-    jest.fn(() => <div data-testid='closed-market-message'>ClosedMarketMessage</div>)
-);
 jest.mock('AppV2/Components/CurrentSpot', () => jest.fn(() => <div data-testid='current-spot'>CurrentSpot</div>));
 jest.mock('AppV2/Components/MarketSelector', () =>
     jest.fn(() => <div data-testid='market-selector'>MarketSelector</div>)
@@ -64,9 +61,6 @@ jest.mock('AppV2/Components/OnboardingGuide/GuideForPages', () =>
 );
 jest.mock('AppV2/Components/PurchaseButton', () =>
     jest.fn(() => <div data-testid='purchase-button'>PurchaseButton</div>)
-);
-jest.mock('AppV2/Components/ServiceErrorSheet', () =>
-    jest.fn(() => <div data-testid='service-error-sheet'>ServiceErrorSheet</div>)
 );
 jest.mock('AppV2/Components/TradeErrorSnackbar', () =>
     jest.fn(() => <div data-testid='trade-error-snackbar'>TradeErrorSnackbar</div>)
@@ -84,11 +78,6 @@ jest.mock('../trade-types', () => jest.fn(() => <div data-testid='trade-types'>T
 jest.mock('AppV2/Utils/layout-utils', () => ({
     getChartHeight: jest.fn(() => 400),
     HEIGHT: { BOTTOM_NAV: 60 },
-    checkIsServiceModalError: jest.fn(() => true),
-    SERVICE_ERROR: {
-        INSUFFICIENT_BALANCE: 'InsufficientBalance',
-        AUTHORIZATION_REQUIRED: 'AuthorizationRequired',
-    },
 }));
 
 // Mock trade types utils
@@ -203,8 +192,6 @@ describe('Trade', () => {
             common: {
                 current_language: 'EN',
                 network_status: { class: 'online' },
-                services_error: undefined,
-                resetServicesError: jest.fn(),
             },
             ui: {
                 is_dark_mode_on: false,
@@ -291,8 +278,6 @@ describe('Trade', () => {
             expect(screen.getAllByTestId('trade-parameters')).toHaveLength(2);
             expect(screen.getByTestId('trade-chart')).toBeInTheDocument();
             expect(screen.getByTestId('purchase-button')).toBeInTheDocument();
-            expect(screen.getByTestId('service-error-sheet')).toBeInTheDocument();
-            expect(screen.getByTestId('closed-market-message')).toBeInTheDocument();
             expect(screen.getByTestId('trade-error-snackbar')).toBeInTheDocument();
         });
 
