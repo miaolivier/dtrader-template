@@ -337,6 +337,9 @@ export default class ClientStore extends BaseStore {
         let authorize_response;
 
         if (account_id) {
+            // Set is_logging_in to true while we wait for authorization
+            this.setIsLoggingIn(true);
+
             // Wait for balance response which serves as authorization
             try {
                 authorize_response = await this.waitForBalanceResponse();
