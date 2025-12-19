@@ -68,46 +68,71 @@
         height: 100%;
     }
     &__trade {
-        background-color: var(--semantic-color-slate-solid-surface-frame-mid);
-        padding: 0 var(--core-spacing-400);
-        gap: var(--semantic-spacing-general-sm);
         position: relative;
         overflow-x: hidden;
 
-        .skeleton-box,
-        .skeleton-box__trade-types,
-        .skeleton-box__trade-params,
-        .skeleton-box__chart {
+        @include mobile-screen {
+            padding: 0 var(--core-spacing-400);
+            gap: var(--semantic-spacing-general-sm);
+            background-color: var(--semantic-color-slate-solid-surface-frame-mid);
+        }
+
+        .skeleton-box {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            height: 100%;
             border-radius: var(--semantic-borderRadius-md);
-            background-color: var(--component-modal-bg);
+
+            @include mobile-screen {
+                height: unset;
+                background-color: var(--component-modal-bg);
+            }
 
             &__trade-types {
                 position: relative;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                flex-wrap: nowrap;
                 inset-inline-start: calc(-1 * var(--semantic-spacing-general-sm));
                 width: 100vw;
-                flex-direction: row;
-                flex-wrap: nowrap;
+                height: 6.5rem;
                 border-radius: unset;
+                border-bottom: 1px solid var(--semantic-color-monochrome-border-normal-mid);
                 padding: var(--semantic-spacing-general-sm) var(--semantic-spacing-general-md);
                 gap: var(--semantic-spacing-general-sm);
 
                 .skeleton {
                     flex-shrink: 0;
                 }
+
+                @include mobile-screen {
+                    height: unset;
+                    border-bottom: none;
+                }
             }
             &__market {
+                display: flex;
+                flex-direction: column;
                 padding: 0 var(--semantic-spacing-general-sm);
+                background-color: unset;
             }
             &__trade-params {
+                display: flex;
+                flex-direction: column;
                 padding: var(--semantic-spacing-general-md);
                 gap: var(--semantic-spacing-general-md);
+                width: 32rem;
+
+                @include mobile-screen {
+                    width: unset;
+                }
 
                 &-row {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                    flex-direction: row;
                 }
                 &-column {
                     display: flex;
@@ -116,8 +141,14 @@
                 }
             }
             &__chart {
-                min-height: 400px;
+                flex-direction: column;
+                width: calc(100% - 32rem);
+                height: 100%;
                 padding: var(--semantic-spacing-general-sm);
+
+                @include mobile-screen {
+                    width: unset;
+                }
             }
         }
     }

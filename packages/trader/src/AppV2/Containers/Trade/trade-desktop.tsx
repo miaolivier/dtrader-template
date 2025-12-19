@@ -79,11 +79,7 @@ const TradeDesktop = observer(() => {
     );
 
     const onTradeTypeSelect = React.useCallback(
-        (
-            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-            subform_name: string,
-            trade_type_count: number
-        ) => {
+        (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
             const selected_trade_type = trade_types.find(
                 ({ text }) => text === (e.target as HTMLButtonElement).textContent
             );
