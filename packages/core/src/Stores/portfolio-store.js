@@ -1,5 +1,5 @@
 import throttle from 'lodash.throttle';
-import { action, computed, makeObservable, observable, override, reaction, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, override, runInAction, when } from 'mobx';
 import { computedFn } from 'mobx-utils';
 
 import { Money } from '@deriv/components';
@@ -10,10 +10,8 @@ import {
     filterDisabledPositions,
     formatMoney,
     formatPortfolioPosition,
-    trackAnalyticsEvent,
     getContractPath,
     getCurrentTick,
-    mapErrorMessage,
     getDisplayStatus,
     getDurationPeriod,
     getDurationTime,
@@ -26,9 +24,11 @@ import {
     isEnded,
     isMultiplierContract,
     isValidToSell,
+    mapErrorMessage,
     removeBarrier,
     routes,
     setLimitOrderBarriers,
+    trackAnalyticsEvent,
     TRADE_TYPES,
     WS,
 } from '@deriv/shared';
@@ -111,12 +111,11 @@ export default class PortfolioStore extends BaseStore {
         this.root_store = root_store;
     }
 
-    async initializePortfolio() {
+    initializePortfolio() {
         if (this.has_subscribed_to_poc_and_transaction) {
             this.clearTable();
         }
         this.is_loading = true;
-        await WS.wait('balance');
         WS.portfolio().then(this.portfolioHandler);
         WS.subscribeProposalOpenContract(null, this.proposalOpenContractQueueHandler);
         WS.subscribeTransaction(this.transactionHandler);
@@ -547,19 +546,15 @@ export default class PortfolioStore extends BaseStore {
         this.onNetworkStatusChange(this.networkStatusChangeListener);
         this.onLogout(this.logoutListener);
         if (this.positions.length === 0 && !this.has_subscribed_to_poc_and_transaction) {
-            // TODO: Optimise the way is_logged_in changes are detected for "logging in" and "already logged on" states
-            if (this.root_store.client.is_logged_in) {
-                this.initializePortfolio();
-            } else {
-                reaction(
-                    () => this.root_store.client.is_logged_in,
-                    () => {
-                        if (this.root_store.client.is_logged_in) {
-                            this.initializePortfolio();
-                        }
-                    }
-                );
-            }
+            // Use 'when' instead of 'reaction' to handle race conditions on direct page load
+            // 'when' checks the condition immediately and fires if already true, preventing
+            // the race condition where is_logged_in becomes true before the reaction is set up
+            when(
+                () => this.root_store.client.is_logged_in,
+                () => {
+                    this.initializePortfolio();
+                }
+            );
         }
     }
 

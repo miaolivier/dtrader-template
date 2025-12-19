@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce';
-import { action, computed, makeObservable, observable, override } from 'mobx';
+import { action, computed, makeObservable, observable, override, when } from 'mobx';
 
-import { filterDisabledPositions, toMoment, WS, mapErrorMessage } from '@deriv/shared';
+import { filterDisabledPositions, mapErrorMessage, toMoment, WS } from '@deriv/shared';
 
 import BaseStore from '../../base-store';
 import getDateBoundaries from '../Profit/Helpers/format-request';
@@ -169,7 +169,7 @@ export default class StatementStore extends BaseStore {
         this.is_loading = this.is_loading || !is_online;
     }
 
-    async onMount() {
+    onMount() {
         this.assertHasValidCache(
             this.client_loginid,
             this.clearDateFilter,
@@ -178,8 +178,16 @@ export default class StatementStore extends BaseStore {
         );
         this.client_loginid = this.root_store.client.loginid;
         this.onNetworkStatusChange(this.networkStatusChangeListener);
-        await WS.wait('balance');
-        this.fetchNextBatch(true);
+
+        // Use 'when' to wait for authentication before fetching data
+        // This prevents race conditions on direct page load where the component
+        // mounts before authentication completes
+        when(
+            () => this.root_store.client.is_logged_in,
+            () => {
+                this.fetchNextBatch(true);
+            }
+        );
     }
 
     /* DO NOT call clearDateFilter() upon unmounting the component, date filters should stay

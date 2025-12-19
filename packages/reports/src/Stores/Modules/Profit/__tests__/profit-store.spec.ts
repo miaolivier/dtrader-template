@@ -52,7 +52,6 @@ jest.mock('@deriv/shared', () => {
                     ],
                 },
             }),
-            wait: jest.fn(),
         },
     };
 });
@@ -112,6 +111,7 @@ describe('ProfitTableStore', () => {
             root_store: mockStore({
                 client: {
                     loginid: mocked_loginid,
+                    is_logged_in: true,
                 },
                 modules: {
                     positions: {
@@ -129,8 +129,12 @@ describe('ProfitTableStore', () => {
     });
 
     describe('is_empty', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
             mocked_profit_table_store.onMount();
+            // Wait for data to load after authentication
+            await waitFor(() => {
+                expect(mocked_profit_table_store.data.length).toBeGreaterThan(0);
+            });
         });
         it('should return false if is_loading={false} but data is non-empty regardless of is_loading value', () => {
             expect(mocked_profit_table_store.data).toEqual([multiplier_contract, rise_contract]);
@@ -295,7 +299,7 @@ describe('ProfitTableStore', () => {
         });
     });
     describe('onMount', () => {
-        it('should set client_loginid from client-store loginid, wait for balance API and call fetchNextBatch', async () => {
+        it('should set client_loginid from client-store loginid, wait for authentication and call fetchNextBatch', async () => {
             const spyFetchNextBatch = jest.spyOn(mocked_profit_table_store, 'fetchNextBatch');
             mocked_profit_table_store.onMount();
 
@@ -321,23 +325,27 @@ describe('ProfitTableStore', () => {
         it('should return total profit_loss of all transactions', async () => {
             mocked_profit_table_store.onMount();
 
+            // Wait for data to load after authentication
             await waitFor(() => {
-                expect(mocked_profit_table_store.totals).toEqual({ profit_loss: '-2.09' });
+                expect(mocked_profit_table_store.data.length).toBeGreaterThan(0);
             });
+
+            expect(mocked_profit_table_store.totals).toEqual({ profit_loss: '-2.09' });
         });
     });
     describe('clearTable', () => {
         it('should clear data, has_loaded_all & is_loading', async () => {
             mocked_profit_table_store.onMount();
 
+            // Wait for data to load after authentication
             await waitFor(() => {
                 expect(mocked_profit_table_store.data).toEqual([multiplier_contract, rise_contract]);
-
-                mocked_profit_table_store.clearTable();
-                expect(mocked_profit_table_store.data).toEqual([]);
-                expect(mocked_profit_table_store.has_loaded_all).toBe(false);
-                expect(mocked_profit_table_store.is_loading).toBe(false);
             });
+
+            mocked_profit_table_store.clearTable();
+            expect(mocked_profit_table_store.data).toEqual([]);
+            expect(mocked_profit_table_store.has_loaded_all).toBe(false);
+            expect(mocked_profit_table_store.is_loading).toBe(false);
         });
     });
     describe('clearDateFilter', () => {

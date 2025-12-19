@@ -83,6 +83,9 @@ describe('PositionsContent', () => {
 
     beforeEach(() => {
         defaultMockStore = mockStore({
+            client: {
+                is_logged_in: true,
+            },
             portfolio: {
                 active_positions: [
                     {

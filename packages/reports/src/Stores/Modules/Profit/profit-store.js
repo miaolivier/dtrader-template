@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce';
-import { action, computed, makeObservable, observable, override } from 'mobx';
+import { action, computed, makeObservable, observable, override, when } from 'mobx';
 
-import { filterDisabledPositions, toMoment, WS, mapErrorMessage } from '@deriv/shared';
+import { filterDisabledPositions, mapErrorMessage, toMoment, WS } from '@deriv/shared';
 
 import BaseStore from '../../base-store';
 
@@ -117,17 +117,25 @@ export default class ProfitTableStore extends BaseStore {
         this.is_loading = this.is_loading || !is_online;
     }
 
-    async onMount(shouldFilterContractTypes) {
+    onMount(shouldFilterContractTypes) {
         this.assertHasValidCache(this.client_loginid, this.clearDateFilter, WS.forgetAll.bind(null, 'proposal'));
         this.client_loginid = this.root_store.client.loginid;
         this.onNetworkStatusChange(this.networkStatusChangeListener);
-        await WS.wait('balance');
 
         /* Caching won't work for profit_table because date filtering happens based on `buy_time` of a contract.
         If we already have a cache for a period and if we sell a contract that was purchased in that period
         then the sold contract won't be there in profit_table when visited again unless we fetch it again.
         Caching will only work if the date filtering happens based on `sell_time` of a contract in BE. */
-        this.fetchNextBatch(shouldFilterContractTypes, true);
+
+        // Use 'when' to wait for authentication before fetching data
+        // This prevents race conditions on direct page load where the component
+        // mounts before authentication completes
+        when(
+            () => this.root_store.client.is_logged_in,
+            () => {
+                this.fetchNextBatch(shouldFilterContractTypes, true);
+            }
+        );
     }
 
     /* DO NOT call clearDateFilter() upon unmounting the component, date filters should stay
