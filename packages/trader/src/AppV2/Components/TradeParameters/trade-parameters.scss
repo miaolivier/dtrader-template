@@ -31,7 +31,7 @@
                 // if container has 2 children, then apply style to children
                 &:has(> :last-child:nth-child(2)) {
                     .trade-params__option--minimized {
-                        width: unset;
+                        width: unset !important;
                     }
                 }
 
@@ -52,8 +52,8 @@
     }
     &__option {
         &--minimized {
-            width: 16rem;
-            flex-shrink: 0;
+            width: 16rem !important; // Ensure fixed width in minimized mode
+            flex-shrink: 0 !important;
         }
         &:not(.trade-params__option--minimized) {
             height: var(--core-size-2800);
