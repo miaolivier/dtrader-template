@@ -375,7 +375,7 @@ export default class TradeStore extends BaseStore {
     is_initial_barrier_applied = false;
     is_digits_widget_active = false;
     should_skip_prepost_lifecycle = false;
-    reconnectHandler?: () => void;
+    reconnectHandler?: () => Promise<void>;
     constructor({ root_store }: { root_store: TRootStore }) {
         const local_storage_properties = [
             'amount',
@@ -2010,14 +2010,32 @@ export default class TradeStore extends BaseStore {
         this.onNetworkStatusChange(this.networkStatusChangeListener);
 
         // Add reconnection handler - onReconnect is only called when account_id exists
-        // so we don't need to check is_logged_in here
         // Store the handler so we can remove it later
-        this.reconnectHandler = () => {
-            if (this.is_trade_component_mounted) {
+        this.reconnectHandler = async () => {
+            if (!this.is_trade_component_mounted) {
+                return;
+            }
+
+            try {
+                // Clear existing data
                 this.refresh();
+
+                // Reload active symbols (without loading indicator to avoid UI flicker)
+                await this.loadActiveSymbols(false, false);
+
+                // Reload contract types for current symbol
+                await this.setContractTypes();
+
+                // Request new proposals
+                this.debouncedProposal();
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error('Error during reconnection:', error);
+                // Still attempt to get proposals with existing data as fallback
                 this.debouncedProposal();
             }
         };
+
         WS.setOnReconnect(this.reconnectHandler);
 
         this.setChartModeFromURL();

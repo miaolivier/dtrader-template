@@ -60,18 +60,17 @@ const initStore = async (notification_messages, accounts) => {
 
             // Validate URL is from trusted domain
             const url = new URL(decodedRecoveryLink);
-            const allowedHosts = [
-                'auth.deriv.com',
-                'staging-auth.deriv.com',
-            ];
-            
+            const allowedHosts = ['auth.deriv.com', 'staging-auth.deriv.com'];
+
             if (!allowedHosts.includes(url.hostname)) {
+                // eslint-disable-next-line no-console
                 console.error('Invalid ory_cookie_link domain:', url.hostname);
                 return root_store; // or throw error
             }
-            
+
             // Enforce HTTPS
             if (url.protocol !== 'https:') {
+                // eslint-disable-next-line no-console
                 console.error('ory_cookie_link must use HTTPS');
                 return root_store;
             }
@@ -80,6 +79,7 @@ const initStore = async (notification_messages, accounts) => {
                 credentials: 'include',
             });
         } catch (e) {
+            // eslint-disable-next-line no-console
             console.error('Failed to decode ory_cookie_link:', e);
         }
     }

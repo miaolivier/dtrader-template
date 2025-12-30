@@ -66,6 +66,10 @@ const BinarySocketGeneral = (() => {
 
                     // Only call authorizeAccount when needed
                     if (loginid_changed || not_yet_authorized) {
+                        // Clear contract markers when account changes to prevent showing previous account's contracts
+                        if (loginid_changed) {
+                            client_store.root_store.contract_trade.clearContracts();
+                        }
                         authorizeAccount(response);
                     }
                 }
@@ -157,9 +161,9 @@ const BinarySocketGeneral = (() => {
         }
 
         client_store.responseAuthorize(authorize_data);
+        client_store.setIsAuthorize(true); // Set BEFORE anything that depends on it
         subscribeBalance(); // Continue balance subscription
-        client_store.setIsAuthorize(true);
-        BinarySocket.sendBuffered();
+        BinarySocket.sendBuffered(); // Now buffered calls see is_authorize = true
     };
 
     return {
