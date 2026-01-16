@@ -9,7 +9,6 @@ import { useStore } from '@deriv/stores';
 
 import AccountHeader from 'AppV2/Components/AccountHeader';
 import AccumulatorStats from 'AppV2/Components/AccumulatorStats';
-import CurrentSpot from 'AppV2/Components/CurrentSpot';
 import OnboardingGuide from 'AppV2/Components/OnboardingGuide/GuideForPages';
 import PurchaseButton from 'AppV2/Components/PurchaseButton';
 import TradeErrorSnackbar from 'AppV2/Components/TradeErrorSnackbar';
@@ -19,7 +18,6 @@ import { TradeParameters, TradeParametersContainer } from 'AppV2/Components/Trad
 import useContractsFor from 'AppV2/Hooks/useContractsFor';
 import useDefaultSymbol from 'AppV2/Hooks/useDefaultSymbol';
 import { getDisplayedContractTypes } from 'AppV2/Utils/trade-types-utils';
-import { isDigitTradeType } from 'Modules/Trading/Helpers/digits';
 import { useTraderStore } from 'Stores/useTraderStores';
 
 import { TradeChart } from '../Chart';
@@ -124,7 +122,6 @@ const TradeDesktop = observer(() => {
                     {/* <MarketSelector /> */}
                     <div className='trade-container-v2__grid'>
                         <div className='trade-container-v2__chart-tooltip'>
-                            {isDigitTradeType(contract_type) && <CurrentSpot />}
                             <section
                                 className={clsx('trade-container-v2__chart', {
                                     'trade-container-v2__chart--with-borderRadius': !is_accumulator,
