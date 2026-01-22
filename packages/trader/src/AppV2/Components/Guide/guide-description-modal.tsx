@@ -55,7 +55,6 @@ const GuideDescriptionModal = ({
     show_description_in_a_modal = true,
 }: TGuideDescriptionModal) => {
     const [is_video_player_opened, setIsVideoPlayerOpened] = React.useState(false);
-    const modal_ref = React.useRef<HTMLDialogElement>(null);
     const { isDesktop } = useDevice();
 
     const video_src = getDescriptionVideoIds(selected_contract_type, is_dark_mode_on);
@@ -74,10 +73,6 @@ const GuideDescriptionModal = ({
         toggleVideoPlayer,
         video_src,
     };
-
-    React.useEffect(() => {
-        if (modal_ref.current) is_video_player_opened ? modal_ref.current.showModal() : modal_ref.current.close();
-    }, [is_video_player_opened]);
 
     return (
         <React.Fragment>
@@ -139,19 +134,21 @@ const GuideDescriptionModal = ({
                     <GuideContent {...guide_content_props} />
                 </div>
             )}
-            <PortalModal isOpen={is_video_player_opened}>
-                <VideoPlayer
-                    className='modal-player__wrapper'
-                    data_testid='dt_video_player'
-                    is_v2
-                    is_mobile
-                    increased_drag_area
-                    src={video_src}
-                    onModalClose={toggleVideoPlayer}
-                    muted={true}
-                    hide_volume_control={true}
-                />
-            </PortalModal>
+            {!isDesktop && (
+                <PortalModal isOpen={is_video_player_opened}>
+                    <VideoPlayer
+                        className='modal-player__wrapper'
+                        data_testid='dt_video_player'
+                        src={video_src}
+                        onModalClose={toggleVideoPlayer}
+                        muted={false}
+                        hide_volume_control={false}
+                        is_mobile={true}
+                        is_v2={true}
+                        should_show_controls={true}
+                    />
+                </PortalModal>
+            )}
         </React.Fragment>
     );
 };

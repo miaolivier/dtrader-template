@@ -13,7 +13,7 @@ type TGuideContent = {
     selected_contract_type: string;
     show_guide_for_selected_contract?: boolean;
     show_description_in_a_modal?: boolean;
-    toggleVideoPlayer: (e?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void;
+    toggleVideoPlayer?: (e?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => void;
     video_src: string;
 };
 
