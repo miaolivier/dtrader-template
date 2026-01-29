@@ -11,7 +11,7 @@
 .input-popover {
     position: fixed;
     height: auto;
-    background-color: var(--semantic-color-slate-solid-surface-frame-low);
+    background-color: var(--color-modal-popover-bg);
     box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.16);
     z-index: 1001;
     display: flex;
@@ -20,5 +20,9 @@
     border-radius: 1.6rem;
     border: 1px solid var(--color-surface-border);
     padding: var(--core-spacing-800);
-    gap: var(--core-spacing-800);
+    gap: 0;
+
+    .segmented-control-single {
+        margin-bottom: 1.6rem;
+    }
 }

@@ -65,14 +65,7 @@ const TimeGridPicker: React.FC<TimeGridPickerProps> = ({ selectedTime, onTimeCha
                 <div className='time-grid-picker__label'>
                     <Localize i18n_default_text='Hour' />
                 </div>
-                <div
-                    className='time-grid-picker__grid time-grid-picker__grid--hours'
-                    role='grid'
-                    aria-labelledby='hours-label'
-                >
-                    <span id='hours-label' className='sr-only'>
-                        Hours
-                    </span>
+                <div className='time-grid-picker__grid time-grid-picker__grid--hours' role='grid' aria-label='Hours'>
                     {hours.map(hour => {
                         const isValid = isTimeValid(hour, selectedMinute);
                         const isSelected = hour === selectedHour;
@@ -101,11 +94,8 @@ const TimeGridPicker: React.FC<TimeGridPickerProps> = ({ selectedTime, onTimeCha
                 <div
                     className='time-grid-picker__grid time-grid-picker__grid--minutes'
                     role='grid'
-                    aria-labelledby='minutes-label'
+                    aria-label='Minutes'
                 >
-                    <span id='minutes-label' className='sr-only'>
-                        Minutes
-                    </span>
                     {minutes.map(minute => {
                         const isValid = isTimeValid(selectedHour, minute);
                         const isSelected = minute === selectedMinute;

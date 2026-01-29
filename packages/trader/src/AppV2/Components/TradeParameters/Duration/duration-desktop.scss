@@ -22,7 +22,6 @@
     }
 
     &__header {
-        padding: 0 0 var(--core-spacing-800);
         border-bottom: 0.1rem solid var(--component-divider-default);
     }
 
@@ -49,7 +48,6 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        justify-content: space-between;
     }
 
     &__fields {
@@ -80,7 +78,6 @@
 
     &__footer {
         margin-top: auto;
-        padding-top: var(--core-spacing-800);
 
         button {
             font-size: 1.6rem !important;

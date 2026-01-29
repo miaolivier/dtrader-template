@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 
 // Tooltip positioning constants
-const TOOLTIP_OFFSET = 12; // Distance between tooltip and trigger in pixels
+const TOOLTIP_OFFSET = 4; // Distance between tooltip and trigger in pixels
 const VIEWPORT_PADDING = 8; // Minimum padding from viewport edges in pixels
 
 type TTooltipPortalProps = {

@@ -32,7 +32,6 @@ type TTakeProfitAndStopLossInputProps = {
     parent_is_api_response_received_ref?: React.MutableRefObject<boolean>;
     type?: 'take_profit' | 'stop_loss';
 };
-type TOnProposalResponse = TTradeStore['onProposalResponse'];
 
 const TakeProfitAndStopLossInput = ({
     classname,
@@ -219,6 +218,16 @@ const TakeProfitAndStopLossInput = ({
         onActionSheetClose();
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const isSaveDisabled =
+                (!is_api_response_received_ref.current && is_enabled) || (error_text && is_enabled) || fe_error_text;
+            if (!isSaveDisabled) {
+                onSave();
+            }
+        }
+    };
+
     // scroll the page when a virtual keyboard pop up
     const { is_key_board_visible: should_scroll } = useIsVirtualKeyboardOpen(type);
 
@@ -268,6 +277,7 @@ const TakeProfitAndStopLossInput = ({
                     name={type}
                     noStatusIcon
                     onChange={onInputChange}
+                    onKeyDown={handleKeyDown}
                     placeholder={localize('Amount')}
                     ref={input_ref}
                     regex={/[^0-9.,]/g}

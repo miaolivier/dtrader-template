@@ -81,6 +81,15 @@ const DurationTicksInputDesktop: React.FC<TDurationTicksInputDesktopProps> = obs
         onClose();
     }, [inputValue, validateInput, onChangeMultiple, onClose]);
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const isSaveDisabled = !!error || !inputValue;
+            if (!isSaveDisabled) {
+                handleSave();
+            }
+        }
+    };
+
     const getRangeMessage = () => {
         return (
             <Localize
@@ -100,6 +109,7 @@ const DurationTicksInputDesktop: React.FC<TDurationTicksInputDesktopProps> = obs
                 name='duration'
                 value={inputValue}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 placeholder={localize('Ticks')}
                 variant='fill'
                 inputMode='numeric'

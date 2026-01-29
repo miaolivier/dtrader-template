@@ -1,9 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 
+import { TooltipPortal } from '@deriv/components';
 import { LabelPairedCircleInfoMdRegularIcon } from '@deriv/quill-icons';
 import { TextField } from '@deriv-com/quill-ui';
-import { TooltipPortal } from '@deriv/components';
 
 import { InputPopover } from 'AppV2/Components/InputPopover';
 
@@ -102,6 +102,7 @@ const TradeParameterPopover = ({
                 triggerRef={field_ref}
                 className={popover_classname}
                 popoverWidth={popoverWidth}
+                spacing={8}
             >
                 <TradeParameterPopoverContext.Provider value={contextValue}>
                     {header && <div className={`${popover_classname}__header`}>{header}</div>}

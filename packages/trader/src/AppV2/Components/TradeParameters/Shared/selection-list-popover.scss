@@ -1,8 +1,9 @@
 .selection-list-popover {
+    padding: var(--core-spacing-400) !important;
+
     &__content {
         display: flex;
         flex-direction: column;
-        gap: 0.8rem;
     }
 
     &__option {

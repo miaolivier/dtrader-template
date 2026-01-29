@@ -33,7 +33,7 @@
                 content: '';
                 position: absolute;
                 top: 0;
-                right: 32rem;
+                right: 28rem;
                 width: 5.6rem;
                 height: 100%;
                 background: linear-gradient(to right, transparent, var(--semantic-color-slate-solid-surface-frame-low));
@@ -45,15 +45,24 @@
                 }
             }
         }
+        &__logout {
+            .trade-container-v2__header:after {
+                right: 10rem;
+            }
+
+            .trade-container-v2__trade-types {
+                width: calc(100vw - 7.2rem - 10rem);
+            }
+        }
         &__grid {
             display: grid;
-            grid-template-columns: 1fr minmax(0, 32rem);
+            grid-template-columns: 1fr minmax(0, 28rem);
             position: relative;
             height: calc(100vh - 6.4rem);
         }
         &__trade-types {
             position: relative;
-            width: calc(100vw - 7.2rem - 32rem);
+            width: calc(100vw - 7.2rem - 28rem);
             background-color: var(--semantic-color-slate-solid-surface-frame-low);
             display: flex;
             align-items: center;

@@ -1,0 +1,13 @@
+.fire-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin-left: 0.25rem;
+
+    &__animation {
+        width: 1.2em;
+        height: 1.2em;
+        display: inline-block;
+    }
+}

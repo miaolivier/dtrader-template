@@ -19,7 +19,7 @@ interface DurationEndTimeDesktopProps {
 
 const DurationEndTimeDesktop: React.FC<DurationEndTimeDesktopProps> = observer(({ onClose }) => {
     const { localize } = useTranslations();
-    const { expiry_time, expiry_date, market_open_times, onChangeMultiple } = useTraderStore();
+    const { expiry_time, market_open_times, onChangeMultiple } = useTraderStore();
 
     const [selectedTime, setSelectedTime] = useState(expiry_time || '09:30');
     const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -98,27 +98,27 @@ const DurationEndTimeDesktop: React.FC<DurationEndTimeDesktopProps> = observer((
                 placement='bottom'
                 spacing={4}
             >
-                <div className='duration-end-time-desktop__picker-wrapper'>
+                <div className='duration-end-time-desktop__picker-content'>
                     <TimeGridPicker
                         selectedTime={selectedTime}
                         onTimeChange={handleTimeChange}
                         startTimes={start_times}
                         endTimes={end_times}
                     />
+                    <div className='duration-input-desktop__footer'>
+                        <Button
+                            size='lg'
+                            color='black-white'
+                            variant='primary'
+                            fullWidth
+                            onClick={handleSave}
+                            className='duration-input-desktop__save-button'
+                        >
+                            <Localize i18n_default_text='Done' />
+                        </Button>
+                    </div>
                 </div>
             </InputPopover>
-            <div className='duration-input-desktop__footer'>
-                <Button
-                    size='lg'
-                    color='black-white'
-                    variant='primary'
-                    fullWidth
-                    onClick={handleSave}
-                    className='duration-input-desktop__save-button'
-                >
-                    <Localize i18n_default_text='Save' />
-                </Button>
-            </div>
         </div>
     );
 });

@@ -1,9 +1,9 @@
 /**
  * Component Color Tokens (Auto-Generated)
- * 
+ *
  * This file is auto-generated from brand.config.json
  * Do not edit manually - run 'npm run generate:colors' instead
- * 
+ *
  * These variables define colors for specific UI components.
  * SCSS functions use actual color constants, not CSS variables.
  */
@@ -61,6 +61,7 @@
         // Modal/Dialog Colors
         --color-modal-bg: var(--color-surface-primary);
         --color-modal-bg-secondary: var(--color-surface-section);
+        --color-modal-popover-bg: #ffffff;
         --color-modal-backdrop: #{transparentize($color-black, 0.72)};
         --color-modal-border: var(--color-interactive-default);
 
@@ -156,6 +157,7 @@
         // Modal/Dialog Colors
         --color-modal-bg: var(--core-color-solid-slate-1100);
         --color-modal-bg-secondary: var(--core-color-solid-slate-1000);
+        --color-modal-popover-bg: #20242f;
         --color-modal-backdrop: #{transparentize($color-black, 0.4)};
         --color-modal-border: var(--color-interactive-default);
 

@@ -198,6 +198,15 @@ const TakeProfitInputDesktop = observer(({ onClose, is_open }: TTakeProfitInputD
         onClose();
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const isSaveDisabled = is_loading || !!(state.fe_error_text || (state.error_text && state.is_enabled));
+            if (!isSaveDisabled) {
+                onSave();
+            }
+        }
+    };
+
     const getInputMessage = () => {
         // Always show range if available, regardless of error state
         if (state.min_value && state.max_value) {
@@ -236,6 +245,7 @@ const TakeProfitInputDesktop = observer(({ onClose, is_open }: TTakeProfitInputD
                     value={state.input_value}
                     onChange={onInputChange}
                     onBeforeInput={onBeforeInputChange}
+                    onKeyDown={handleKeyDown}
                     placeholder={localize('Amount')}
                     variant='fill'
                     inputMode='decimal'

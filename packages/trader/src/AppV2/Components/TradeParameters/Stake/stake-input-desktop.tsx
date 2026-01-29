@@ -9,7 +9,7 @@ import {
     mapErrorMessage,
     trackAnalyticsEvent,
 } from '@deriv/shared';
-import { TextField, Button } from '@deriv-com/quill-ui';
+import { Button, TextField } from '@deriv-com/quill-ui';
 import { Localize, useTranslations } from '@deriv-com/translations';
 
 import useIsVirtualKeyboardOpen from 'AppV2/Hooks/useIsVirtualKeyboardOpen';
@@ -414,6 +414,16 @@ const StakeInput = observer(({ onClose, is_open }: TStakeInput) => {
         onClose();
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const isSaveDisabled =
+                is_loading_proposal || !!fe_stake_error || !!(should_show_stake_error && stake_error);
+            if (!isSaveDisabled) {
+                onSave();
+            }
+        }
+    };
+
     return (
         <div className='stake-input-desktop__wrapper'>
             <TextField
@@ -423,6 +433,7 @@ const StakeInput = observer(({ onClose, is_open }: TStakeInput) => {
                 value={proposal_request_values.amount}
                 onChange={onInputChange}
                 onBeforeInput={onBeforeInputChange}
+                onKeyDown={handleKeyDown}
                 placeholder={localize('Amount')}
                 variant='fill'
                 inputMode='decimal'

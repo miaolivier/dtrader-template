@@ -22,4 +22,11 @@
         line-height: 2rem;
         padding: 0 0.8rem;
     }
+
+    &__picker-content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--core-spacing-800);
+        height: 100%;
+    }
 }

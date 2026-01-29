@@ -414,6 +414,16 @@ const StakeInput = observer(({ onClose, is_open }: TStakeInput) => {
         onClose();
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const isSaveDisabled =
+                is_loading_proposal || !!fe_stake_error || !!(should_show_stake_error && stake_error);
+            if (!isSaveDisabled) {
+                onSave();
+            }
+        }
+    };
+
     return (
         <React.Fragment>
             <ActionSheet.Content className='stake-content'>
@@ -433,6 +443,7 @@ const StakeInput = observer(({ onClose, is_open }: TStakeInput) => {
                     noStatusIcon
                     onChange={onInputChange}
                     onBeforeInput={onBeforeInputChange}
+                    onKeyDown={handleKeyDown}
                     placeholder={localize('Amount')}
                     regex={/[^0-9.,]/g}
                     status={fe_stake_error || (should_show_stake_error && stake_error) ? 'error' : 'neutral'}

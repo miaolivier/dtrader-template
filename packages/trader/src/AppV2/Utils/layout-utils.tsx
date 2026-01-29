@@ -70,7 +70,8 @@ export const getChartHeight = ({
         isVisible('payout_per_point_info') ||
         isVisible('allow_equals') ||
         isVisible('payout') ||
-        isVisible('barrier_info')
+        isVisible('barrier_info') ||
+        isVisible('multipliers_info')
     ) {
         height -= HEIGHT.ADDITIONAL_INFO;
     }

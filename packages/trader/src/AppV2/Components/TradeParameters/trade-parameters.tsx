@@ -15,6 +15,7 @@ import LastDigitPrediction from './LastDigitPrediction';
 import Multiplier from './Multiplier';
 import MultipliersDealCancellationInfo from './MultipliersDealCancellationInfo';
 import MultipliersExpirationInfo from './MultipliersExpirationInfo';
+import MultipliersInformation from './MultipliersInformation';
 import PayoutInfo from './PayoutInfo';
 import PayoutPerPoint from './PayoutPerPoint';
 import PayoutPerPointInfo from './PayoutPerPointInfo';
@@ -74,7 +75,8 @@ const TradeParameters = observer(({ is_minimized }: TTradeParametersProps) => {
             {isVisible('payout') && <PayoutInfo />}
             {isVisible('payout_per_point_info') && <PayoutPerPointInfo />}
             {isVisible('expiration') && <MultipliersExpirationInfo />}
-            {isVisible('mult_info_display') && <MultipliersDealCancellationInfo is_minimized={is_minimized} />}
+            {isVisible('mult_info_display') && <MultipliersDealCancellationInfo />}
+            {isVisible('multipliers_info') && <MultipliersInformation />}
             {isVisible('allow_equals') && <AllowEquals />}
         </div>
     );

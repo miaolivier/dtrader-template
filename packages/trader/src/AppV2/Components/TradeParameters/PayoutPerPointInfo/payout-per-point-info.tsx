@@ -1,10 +1,9 @@
-import React from 'react';
 import clsx from 'clsx';
 
-import { Skeleton } from '@deriv/components';
+import { Skeleton, TooltipPortal } from '@deriv/components';
 import { observer } from '@deriv/stores';
-import { Localize } from '@deriv-com/translations';
 import { Text } from '@deriv-com/quill-ui';
+import { Localize } from '@deriv-com/translations';
 
 import { useTraderStore } from 'Stores/useTraderStores';
 
@@ -16,13 +15,22 @@ const PayoutPerPointInfo = observer(() => {
 
     if (has_error) return null;
 
+    const tooltipMessage = (
+        <Localize i18n_default_text="The money you earn or lose for every one-point change in an asset's price." />
+    );
+
     return (
         <div className='payout-per-point-info__container'>
-            <Text size='sm' className={clsx(is_market_closed && 'trade-params__text--disabled')}>
-                <Localize i18n_default_text='Payout per point' />
-            </Text>
+            <TooltipPortal message={tooltipMessage} position='left'>
+                <Text
+                    size='sm'
+                    className={clsx('payout-per-point-info__label', is_market_closed && 'trade-params__text--disabled')}
+                >
+                    <Localize i18n_default_text='Payout per point' />
+                </Text>
+            </TooltipPortal>
             {payout_per_point ? (
-                <Text size='sm' bold className={clsx(is_market_closed && 'trade-params__text--disabled')}>
+                <Text size='sm' className={clsx(is_market_closed && 'trade-params__text--disabled')}>
                     {payout_per_point} {currency}
                 </Text>
             ) : (

@@ -31,10 +31,8 @@ const DurationEndDateDesktop: React.FC<DurationEndDateDesktopProps> = observer((
     const handleDateChange = useCallback((value: Date | Date[] | null | [Date | null, Date | null]) => {
         if (value && value instanceof Date) {
             setSelectedDate(value);
-            setIsPickerOpen(false);
         } else if (Array.isArray(value) && value[0] instanceof Date) {
             setSelectedDate(value[0]);
-            setIsPickerOpen(false);
         }
     }, []);
 
@@ -100,7 +98,7 @@ const DurationEndDateDesktop: React.FC<DurationEndDateDesktopProps> = observer((
                 placement='bottom'
                 spacing={4}
             >
-                <div className='duration-end-date-desktop__picker-wrapper'>
+                <div className='duration-end-date-desktop__picker-content'>
                     <DatePicker
                         hasFixedWidth={false}
                         minDate={getMinDate()}
@@ -109,20 +107,20 @@ const DurationEndDateDesktop: React.FC<DurationEndDateDesktopProps> = observer((
                         value={selectedDate}
                         onChange={handleDateChange}
                     />
+                    <div className='duration-input-desktop__footer'>
+                        <Button
+                            size='lg'
+                            color='black-white'
+                            variant='primary'
+                            fullWidth
+                            onClick={handleSave}
+                            className='duration-input-desktop__save-button'
+                        >
+                            <Localize i18n_default_text='Done' />
+                        </Button>
+                    </div>
                 </div>
             </InputPopover>
-            <div className='duration-input-desktop__footer'>
-                <Button
-                    size='lg'
-                    color='black-white'
-                    variant='primary'
-                    fullWidth
-                    onClick={handleSave}
-                    className='duration-input-desktop__save-button'
-                >
-                    <Localize i18n_default_text='Save' />
-                </Button>
-            </div>
         </div>
     );
 });

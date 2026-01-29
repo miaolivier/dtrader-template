@@ -11,6 +11,7 @@ import { useDevice } from '@deriv-com/ui';
 
 import Carousel from 'AppV2/Components/Carousel';
 import CarouselHeader from 'AppV2/Components/Carousel/carousel-header';
+import FireIcon from 'AppV2/Components/FireIcon';
 import TradeTypesSelectionGuide from 'AppV2/Components/OnboardingGuide/TradeTypesSelectionGuide';
 import TradeTypesSelector from 'AppV2/Components/TradeTypesSelector';
 import { checkContractTypePrefix } from 'AppV2/Utils/contract-type';
@@ -319,7 +320,8 @@ const TradeTypes = ({ contract_type, onTradeTypeSelect, trade_types, is_dark_mod
                     selected={isTradeTypeSelected(id)}
                 >
                     <Text size='sm'>
-                        {title} {show_fire_icon && '🔥'}
+                        {title}
+                        {show_fire_icon && <FireIcon />}
                     </Text>
                 </Chip.Selectable>
             ))}

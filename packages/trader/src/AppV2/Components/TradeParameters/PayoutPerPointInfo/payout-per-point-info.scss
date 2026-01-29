@@ -5,4 +5,8 @@
         align-items: center;
         padding: 0 var(--core-spacing-400);
     }
+
+    &__label {
+        border-bottom: 1px dotted currentcolor;
+    }
 }

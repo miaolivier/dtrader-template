@@ -141,6 +141,45 @@
             background-color: var(--semantic-color-monochrome-surface-normal-lowest);
         }
 
+        // Custom styling for trade type segmented control (Rise/Fall, Higher/Lower, etc.)
+        &.segmented-control-single {
+            border-radius: 2rem !important; // Pill-shaped wrapper
+
+            button {
+                border-radius: 2rem !important; // Pill-shaped rounded corners
+                transition: all 0.2s ease; // Smooth transitions
+
+                // Selected state - target the actual button with .selected class
+                &.selected {
+                    // Target the span (quill-typography) inside the button
+                    span,
+                    .quill-typography {
+                        color: var(--component-button-bg-buy-primary-default) !important; // Buy button green (brighter)
+                        font-weight: 700 !important; // Bold font weight
+                    }
+                }
+
+                // Selected state for last button (Fall/Lower/Put/etc.) - red
+                &:last-child.selected {
+                    span,
+                    .quill-typography {
+                        color: var(--component-button-bg-sell-primary-default) !important; // Sell button red (brighter)
+                        font-weight: 700 !important; // Bold font weight
+                    }
+                }
+            }
+
+            // Ensure border-radius applies to both mobile and desktop sizes
+            &--md,
+            &--sm {
+                border-radius: 2rem !important;
+
+                button {
+                    border-radius: 2rem !important;
+                }
+            }
+        }
+
         @include mobile-or-tablet-screen {
             &.quill-input__wrapper__variant--fill--neutral:hover {
                 background-color: var(--semantic-color-slate-solid-surface-frame-low);
@@ -194,7 +233,6 @@
         .dc-tooltip-portal__content {
             background-color: var(--color-surface-inverse);
             color: var(--color-text-inverse);
-            border-radius: var(--core-borderRadius-100);
             padding: var(--core-spacing-400) var(--core-spacing-800);
             font-size: var(--core-fontSize-75);
             line-height: var(--core-lineHeight-100);

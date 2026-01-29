@@ -65,7 +65,6 @@ $trade-types-modal-height: 65rem;
         height: $trade-types-modal-height;
         display: flex;
         flex-direction: column;
-        background-color: var(--semantic-color-slate-solid-surface-frame-low);
         padding: 0;
         overflow: hidden;
     }
@@ -132,7 +131,7 @@ $trade-types-modal-height: 65rem;
                 transform: translateX(-50%);
                 width: 2.4rem;
                 height: 0.4rem;
-                background-color: var(--core-color-solid-red-900);
+                background-color: var(--custom-indicator-red);
                 border-radius: 50px;
             }
         }
@@ -177,7 +176,6 @@ $trade-types-modal-height: 65rem;
     &__item {
         width: 100%;
         padding: 1.2rem 1.6rem;
-        background-color: var(--semantic-color-slate-solid-surface-frame-low);
         border: none;
         border-radius: 0.8rem;
         text-align: left;

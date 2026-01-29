@@ -8,6 +8,7 @@ import {
     isSameTradeTypeCategory,
     TAvailableContract,
 } from '../../Utils/trade-types-utils';
+import FireIcon from '../FireIcon';
 
 type TTradeTypesSelectorContentProps = {
     available_contracts: TAvailableContract[];
@@ -68,7 +69,7 @@ const TradeTypesSelectorContent = ({
                                     >
                                         <Text size='md'>
                                             {contract.tradeType}
-                                            {contract.show_fire_icon && ' 🔥'}
+                                            {contract.show_fire_icon && <FireIcon />}
                                         </Text>
                                     </button>
                                 );

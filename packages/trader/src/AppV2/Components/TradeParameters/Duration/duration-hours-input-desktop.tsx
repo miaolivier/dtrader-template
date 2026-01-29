@@ -148,6 +148,15 @@ const DurationHoursInputDesktop: React.FC<DurationHoursInputDesktopProps> = obse
         }
     }, [state.hoursValue, state.minutesValue, onChangeMultiple, onClose]);
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const isSaveDisabled = state.hoursValue === '' && state.minutesValue === '';
+            if (!isSaveDisabled) {
+                handleSave();
+            }
+        }
+    };
+
     const getRangeMessage = useCallback(() => {
         if (state.hoursError) {
             return state.hoursError;
@@ -167,6 +176,7 @@ const DurationHoursInputDesktop: React.FC<DurationHoursInputDesktopProps> = obse
                         label='Hours'
                         value={state.hoursValue}
                         onChange={handleHoursChange}
+                        onKeyDown={handleKeyDown}
                         placeholder='0'
                         maxLength={2}
                         status={state.hoursError ? 'error' : 'neutral'}
@@ -179,6 +189,7 @@ const DurationHoursInputDesktop: React.FC<DurationHoursInputDesktopProps> = obse
                         label='Minutes'
                         value={state.minutesValue}
                         onChange={handleMinutesChange}
+                        onKeyDown={handleKeyDown}
                         placeholder='0'
                         maxLength={2}
                         status={state.minutesError ? 'error' : 'neutral'}

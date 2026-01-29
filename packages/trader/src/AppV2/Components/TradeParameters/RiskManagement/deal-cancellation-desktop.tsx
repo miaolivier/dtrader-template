@@ -25,7 +25,6 @@ const DealCancellationDesktop = observer(({ closePopover }: TDealCancellationDes
     const { addSnackbar } = useSnackbar();
 
     const [is_enabled, setIsEnabled] = React.useState(has_cancellation);
-    const [selected_value, setSelectedValue] = React.useState(Number(cancellation_duration));
 
     // Create a map to store original values with their numeric equivalents
     const valueMap = React.useMemo(() => {
@@ -38,6 +37,21 @@ const DealCancellationDesktop = observer(({ closePopover }: TDealCancellationDes
         });
         return map;
     }, [cancellation_range_list]);
+
+    // Parse the current cancellation_duration to get numeric value
+    const getCurrentNumericValue = React.useCallback(() => {
+        const numValue =
+            typeof cancellation_duration === 'string' ? parseInt(cancellation_duration) : Number(cancellation_duration);
+        return !isNaN(numValue) ? numValue : 0;
+    }, [cancellation_duration]);
+
+    const [selected_value, setSelectedValue] = React.useState(getCurrentNumericValue());
+
+    // Update selected_value when cancellation_duration changes (e.g., when popover reopens)
+    React.useEffect(() => {
+        setSelectedValue(getCurrentNumericValue());
+        setIsEnabled(has_cancellation);
+    }, [has_cancellation, getCurrentNumericValue]);
 
     // Extract numeric values from cancellation_range_list
     const chipValues = React.useMemo(() => {

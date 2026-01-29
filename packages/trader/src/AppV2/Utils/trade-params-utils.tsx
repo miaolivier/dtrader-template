@@ -78,6 +78,7 @@ export const getTradeParams = (symbol?: string, has_cancellation?: boolean) => (
         risk_management: true,
         ...(has_cancellation ? { mult_info_display: true } : {}),
         ...(shouldShowExpiration(symbol) ? { expiration: true } : {}),
+        multipliers_info: true,
     },
     [TRADE_TYPES.TURBOS.LONG]: {
         trade_type_tabs: true,

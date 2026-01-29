@@ -3,6 +3,8 @@
     flex-direction: column;
     width: 100%;
     padding: 0;
+    height: 100%;
+    border-right: 1px solid var(--semantic-color-monochrome-border-normal-mid);
 
     &__item {
         position: relative;
@@ -36,7 +38,7 @@
                 transform: translateY(-50%);
                 height: 2.4rem;
                 width: 0.4rem;
-                background-color: var(--core-color-solid-red-900);
+                background-color: var(--custom-indicator-red);
                 border-radius: 50px;
             }
         }

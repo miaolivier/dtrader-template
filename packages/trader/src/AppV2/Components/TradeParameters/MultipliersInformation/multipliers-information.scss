@@ -1,6 +1,5 @@
-.accumulators-info {
-    &__wrapper {
-        width: 100%;
+.multipliers-information {
+    &__container {
         display: flex;
         flex-direction: column;
         gap: var(--core-spacing-400);
@@ -11,7 +10,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
 
         &--collapsible {
             @media (max-width: 768px) {

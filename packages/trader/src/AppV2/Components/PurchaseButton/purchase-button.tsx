@@ -59,7 +59,6 @@ const PurchaseButton = observer(({ onPurchaseSuccess }: TPurchaseButtonProps = {
         is_accumulator,
         is_multiplier,
         is_purchase_enabled,
-        is_touch,
         is_trade_enabled_v2,
         is_turbos,
         is_vanilla_fx,
@@ -95,7 +94,7 @@ const PurchaseButton = observer(({ onPurchaseSuccess }: TPurchaseButtonProps = {
         is_vanilla,
     };
     const has_no_button_content =
-        is_vanilla || is_vanilla_fx || is_turbos || is_multiplier || (is_accumulator && !has_open_accu_contract);
+        is_vanilla || is_vanilla_fx || is_turbos || (is_accumulator && !has_open_accu_contract);
     const contract_types = getDisplayedContractTypes(trade_types, contract_type, trade_type_tab);
     const is_valid_to_sell = active_accu_contract?.contract_info
         ? hasContractEntered(active_accu_contract.contract_info) &&

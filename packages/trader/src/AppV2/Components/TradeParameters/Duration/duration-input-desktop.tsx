@@ -89,6 +89,15 @@ const DurationInputDesktop: React.FC<TDurationInputDesktopProps> = observer(({ u
         onClose();
     }, [inputValue, validateInput, onChangeMultiple, onClose]);
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const isSaveDisabled = !!error || !inputValue;
+            if (!isSaveDisabled) {
+                handleSave();
+            }
+        }
+    };
+
     const getRangeMessage = () => {
         const min = unit === 's' ? MIN_SECONDS : MIN_MINUTES;
         const max = unit === 's' ? MAX_SECONDS : MAX_MINUTES;
@@ -113,6 +122,7 @@ const DurationInputDesktop: React.FC<TDurationInputDesktopProps> = observer(({ u
                 name='duration'
                 value={inputValue}
                 onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
                 placeholder={localize(unit === 's' ? 'Seconds' : 'Minutes')}
                 variant='fill'
                 inputMode='numeric'
