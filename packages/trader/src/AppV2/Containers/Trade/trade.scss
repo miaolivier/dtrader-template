@@ -88,6 +88,7 @@
                     .trade-types-selector__item
                 ) {
                 background-color: transparent !important;
+                cursor: pointer;
 
                 &.quill-chip[data-state='selected'] {
                     background-color: var(--component-chip-bg-selected) !important;

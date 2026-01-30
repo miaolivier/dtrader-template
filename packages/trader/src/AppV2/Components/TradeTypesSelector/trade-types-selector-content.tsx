@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import TooltipPortal from '@deriv/components/src/components/tooltip-portal/tooltip-portal';
 import { Text } from '@deriv-com/quill-ui';
 
 import {
@@ -59,7 +60,7 @@ const TradeTypesSelectorContent = ({
                                 const is_selected = contract.for.some(type =>
                                     isSameTradeTypeCategory(type, selected_trade_type)
                                 );
-                                return (
+                                const button = (
                                     <button
                                         key={contract.id}
                                         className={`trade-types-selector__item ${is_selected ? 'trade-types-selector__item--selected' : ''}`}
@@ -72,6 +73,19 @@ const TradeTypesSelectorContent = ({
                                             {contract.show_fire_icon && <FireIcon />}
                                         </Text>
                                     </button>
+                                );
+
+                                return contract.tooltip ? (
+                                    <TooltipPortal
+                                        key={contract.id}
+                                        message={contract.tooltip}
+                                        position='right'
+                                        className='trade-types-selector__tooltip'
+                                    >
+                                        {button}
+                                    </TooltipPortal>
+                                ) : (
+                                    button
                                 );
                             })}
                         </div>

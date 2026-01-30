@@ -44,8 +44,8 @@ $tooltip-max-width: 28rem;
 
         &--bottom {
             top: -$tooltip-arrow-size;
-            left: 50%;
-            transform: translateX(-50%);
+            left: $tooltip-padding-horizontal;
+            right: auto;
             border-width: 0 $tooltip-arrow-size $tooltip-arrow-size;
             border-color: transparent transparent var(--color-surface-inverse) transparent;
         }

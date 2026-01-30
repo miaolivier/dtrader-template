@@ -1,5 +1,6 @@
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
+import TooltipPortal from '@deriv/components/src/components/tooltip-portal/tooltip-portal';
 import { Text } from '@deriv-com/quill-ui';
 import { Localize } from '@deriv-com/translations';
 
@@ -62,16 +63,31 @@ const TradeTypesSelector = ({
 
     return (
         <div className='trade-types-selector'>
-            <button
-                ref={button_ref}
-                className={`trade-types-selector__button ${is_open ? 'trade-types-selector__button--active' : ''}`}
-                onClick={handleOpen}
-                aria-label='View all trade types'
-                aria-expanded={is_open}
-                aria-haspopup='dialog'
-            >
-                <GridIcon />
-            </button>
+            {!is_open ? (
+                <TooltipPortal message={<Localize i18n_default_text='Explore trade types' />} position='bottom'>
+                    <button
+                        ref={button_ref}
+                        className={`trade-types-selector__button ${is_open ? 'trade-types-selector__button--active' : ''}`}
+                        onClick={handleOpen}
+                        aria-label='View all trade types'
+                        aria-expanded={is_open}
+                        aria-haspopup='dialog'
+                    >
+                        <GridIcon />
+                    </button>
+                </TooltipPortal>
+            ) : (
+                <button
+                    ref={button_ref}
+                    className={`trade-types-selector__button ${is_open ? 'trade-types-selector__button--active' : ''}`}
+                    onClick={handleOpen}
+                    aria-label='View all trade types'
+                    aria-expanded={is_open}
+                    aria-haspopup='dialog'
+                >
+                    <GridIcon />
+                </button>
+            )}
             <InputPopover
                 isOpen={is_open}
                 onClose={handleClose}

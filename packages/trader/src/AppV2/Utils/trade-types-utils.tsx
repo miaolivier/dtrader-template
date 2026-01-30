@@ -31,6 +31,7 @@ export type TAvailableContract = {
     is_popular?: boolean;
     show_fire_icon?: boolean;
     category: 'growth_based' | 'directional' | 'digit_based';
+    tooltip?: React.ReactNode;
 };
 
 const getSortedIndex = (type: string) =>
@@ -57,6 +58,7 @@ export const AVAILABLE_CONTRACTS: TAvailableContract[] = [
         is_popular: true,
         show_fire_icon: true,
         category: 'growth_based',
+        tooltip: <Localize i18n_default_text='Compounding returns within price ranges' />,
     },
     {
         tradeType: 'Rise/Fall',
@@ -65,6 +67,7 @@ export const AVAILABLE_CONTRACTS: TAvailableContract[] = [
         is_popular: true,
         show_fire_icon: true,
         category: 'directional',
+        tooltip: <Localize i18n_default_text='Predict price direction' />,
     },
     {
         tradeType: 'Multipliers',
@@ -72,30 +75,35 @@ export const AVAILABLE_CONTRACTS: TAvailableContract[] = [
         for: [TRADE_TYPES.MULTIPLIER],
         is_popular: true,
         category: 'directional',
+        tooltip: <Localize i18n_default_text='Leveraged trading with optional risk controls' />,
     },
     {
         tradeType: 'Turbos',
         id: CONTRACT_LIST.TURBOS,
         for: [TRADE_TYPES.TURBOS.LONG, TRADE_TYPES.TURBOS.SHORT],
         category: 'directional',
+        tooltip: <Localize i18n_default_text='Variable payout based on distance from barrier' />,
     },
     {
         tradeType: 'Vanillas',
         id: CONTRACT_LIST.VANILLAS,
         for: [TRADE_TYPES.VANILLA.CALL, TRADE_TYPES.VANILLA.PUT],
         category: 'directional',
+        tooltip: <Localize i18n_default_text='Traditional options contracts with strike prices' />,
     },
     {
         tradeType: 'Higher/Lower',
         id: CONTRACT_LIST.HIGHER_LOWER,
         for: [TRADE_TYPES.HIGH_LOW],
         category: 'directional',
+        tooltip: <Localize i18n_default_text='Price above/below barrier' />,
     },
     {
         tradeType: 'Touch/No Touch',
         id: CONTRACT_LIST.TOUCH_NO_TOUCH,
         for: [TRADE_TYPES.TOUCH],
         category: 'directional',
+        tooltip: <Localize i18n_default_text='Barrier interaction' />,
     },
     {
         tradeType: 'Matches/Differs',
@@ -103,6 +111,7 @@ export const AVAILABLE_CONTRACTS: TAvailableContract[] = [
         for: [TRADE_TYPES.MATCH_DIFF],
         is_popular: true,
         category: 'digit_based',
+        tooltip: <Localize i18n_default_text='Last digit matches prediction' />,
     },
     {
         tradeType: 'Over/Under',
@@ -110,12 +119,14 @@ export const AVAILABLE_CONTRACTS: TAvailableContract[] = [
         for: [TRADE_TYPES.OVER_UNDER],
         is_popular: true,
         category: 'digit_based',
+        tooltip: <Localize i18n_default_text='Last digit over/under threshold' />,
     },
     {
         tradeType: 'Even/Odd',
         id: CONTRACT_LIST.EVEN_ODD,
         for: [TRADE_TYPES.EVEN_ODD],
         category: 'digit_based',
+        tooltip: <Localize i18n_default_text='Last digit even or odd' />,
     },
 ];
 

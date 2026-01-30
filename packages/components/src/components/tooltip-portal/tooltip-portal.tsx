@@ -73,8 +73,10 @@ const TooltipPortal = ({ message, children, className, position = 'top', anchorR
                 arrowLeft = 16; // 1.6rem = 16px
                 break;
             case 'bottom':
-                top = triggerRect.bottom + scrollY + VIEWPORT_PADDING;
-                left = triggerRect.left + scrollX + triggerRect.width / 2 - tooltipRect.width / 2;
+                top = triggerRect.bottom + scrollY + TOOLTIP_OFFSET;
+                left = triggerRect.left + scrollX;
+                arrowTop = -6;
+                arrowLeft = 16;
                 break;
             case 'left':
                 top = triggerRect.top + scrollY + triggerRect.height / 2 - tooltipRect.height / 2;
@@ -107,7 +109,7 @@ const TooltipPortal = ({ message, children, className, position = 'top', anchorR
         }
 
         setTooltipPosition({ top, left });
-        if (position === 'top') {
+        if (position === 'top' || position === 'bottom') {
             setArrowPosition({ top: arrowTop, left: arrowLeft });
         }
     }, [position, anchorRef]);
@@ -166,7 +168,7 @@ const TooltipPortal = ({ message, children, className, position = 'top', anchorR
                 tabIndex={0}
                 role='button'
                 aria-describedby={isVisible ? tooltipId : undefined}
-                style={{ display: 'inline-block', width: 'fit-content' }}
+                style={{ display: 'inline-block' }}
             >
                 {children}
             </span>
@@ -191,7 +193,7 @@ const TooltipPortal = ({ message, children, className, position = 'top', anchorR
                             className={`dc-tooltip-portal__arrow dc-tooltip-portal__arrow--${position}`}
                             data-testid={`arrow-${position}`}
                             style={
-                                position === 'top'
+                                position === 'top' || position === 'bottom'
                                     ? {
                                           position: 'absolute',
                                           top: `${arrowPosition.top}px`,
