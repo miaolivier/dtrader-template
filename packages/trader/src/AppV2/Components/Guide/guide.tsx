@@ -24,6 +24,7 @@ type TGuide = {
     show_guide_for_selected_contract?: boolean;
     show_trigger_button?: boolean;
     show_description_in_a_modal?: boolean;
+    show_all_trade_types_in_guide?: boolean;
 };
 
 const Guide = observer(
@@ -32,6 +33,7 @@ const Guide = observer(
         show_guide_for_selected_contract,
         show_trigger_button = true,
         show_description_in_a_modal = true,
+        show_all_trade_types_in_guide,
     }: TGuide) => {
         const {
             ui: { is_dark_mode_on },
@@ -136,6 +138,7 @@ const Guide = observer(
                     selected_contract_type={selected_contract_type}
                     show_guide_for_selected_contract={show_guide_for_selected_contract}
                     show_description_in_a_modal={show_description_in_a_modal}
+                    show_all_trade_types_in_guide={show_all_trade_types_in_guide}
                 />
                 {isMobile && (
                     <GuideDefinitionModal

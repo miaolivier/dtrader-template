@@ -15,7 +15,7 @@ import GuideContent from './guide-content';
 import './guide-description-modal.scss';
 
 type TGuideDescriptionModal = {
-    contract_list: { tradeType: React.ReactNode; id: string }[];
+    contract_list: { tradeType: React.ReactNode; id: string; show_fire_icon?: boolean }[];
     is_dark_mode_on?: boolean;
     is_open?: boolean;
     onChipSelect: (id: string) => void;
@@ -24,6 +24,7 @@ type TGuideDescriptionModal = {
     selected_contract_type: string;
     show_guide_for_selected_contract?: boolean;
     show_description_in_a_modal?: boolean;
+    show_all_trade_types_in_guide?: boolean;
 };
 
 const PortalModal = ({ isOpen, children }: { isOpen: boolean; children: React.ReactNode }) => {
@@ -53,6 +54,7 @@ const GuideDescriptionModal = ({
     selected_contract_type,
     show_guide_for_selected_contract,
     show_description_in_a_modal = true,
+    show_all_trade_types_in_guide,
 }: TGuideDescriptionModal) => {
     const [is_video_player_opened, setIsVideoPlayerOpened] = React.useState(false);
     const { isDesktop } = useDevice();
@@ -70,6 +72,7 @@ const GuideDescriptionModal = ({
         selected_contract_type,
         show_guide_for_selected_contract,
         show_description_in_a_modal,
+        show_all_trade_types_in_guide,
         toggleVideoPlayer,
         video_src,
     };
@@ -91,7 +94,9 @@ const GuideDescriptionModal = ({
                     >
                         <div className='guide-desktop-modal__header'>
                             <Heading.H4 className='guide__title'>
-                                {show_guide_for_selected_contract ? (
+                                {show_all_trade_types_in_guide ? (
+                                    <Localize i18n_default_text='Trade types' />
+                                ) : show_guide_for_selected_contract ? (
                                     selected_contract_type
                                 ) : (
                                     <Localize i18n_default_text='Trade types' />
@@ -110,7 +115,9 @@ const GuideDescriptionModal = ({
                         <ActionSheet.Portal shouldCloseOnDrag>
                             <ActionSheet.Content className='guide__wrapper__content'>
                                 <Heading.H4 className='guide__title'>
-                                    {show_guide_for_selected_contract ? (
+                                    {show_all_trade_types_in_guide ? (
+                                        <Localize i18n_default_text='Trade types' />
+                                    ) : show_guide_for_selected_contract ? (
                                         selected_contract_type
                                     ) : (
                                         <Localize i18n_default_text='Trade types' />

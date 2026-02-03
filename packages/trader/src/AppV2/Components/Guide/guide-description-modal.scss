@@ -1,4 +1,6 @@
 .guide-desktop-modal {
+    height: 72rem;
+
     .modal__content {
         width: 51.2rem;
         max-height: 92.1rem;
@@ -43,8 +45,10 @@
     &__content {
         flex: 1;
         overflow-y: auto;
+        overflow-x: hidden;
         padding: 2.4rem;
         max-height: calc(55rem);
+        min-height: 50rem;
         scrollbar-width: none;
 
         // Fix for Cloudflare Stream component rendering in modal
@@ -59,6 +63,11 @@
                 position: relative;
                 z-index: 1;
             }
+        }
+
+        .guide__menu {
+            margin-inline-end: -2.4rem;
+            padding-inline-end: 2.4rem;
         }
     }
 

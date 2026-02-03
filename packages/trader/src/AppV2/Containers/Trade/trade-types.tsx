@@ -382,7 +382,7 @@ const TradeTypes = ({ contract_type, onTradeTypeSelect, trade_types, is_dark_mod
                     show_trigger_button={false}
                     is_open_by_default={true}
                     show_description_in_a_modal={true}
-                    show_guide_for_selected_contract={true}
+                    show_all_trade_types_in_guide={true}
                 />
             )}
         </div>
