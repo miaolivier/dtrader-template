@@ -10,7 +10,7 @@ import { useStore } from '@deriv/stores';
 import AccountHeader from 'AppV2/Components/AccountHeader';
 import AccumulatorStats from 'AppV2/Components/AccumulatorStats';
 import Guide from 'AppV2/Components/Guide';
-import OnboardingGuide from 'AppV2/Components/OnboardingGuide/GuideForPages';
+import OnboardingGuide, { OnboardingGuideDesktop } from 'AppV2/Components/OnboardingGuide/GuideForPages';
 import PurchaseButton from 'AppV2/Components/PurchaseButton';
 import TradeErrorSnackbar from 'AppV2/Components/TradeErrorSnackbar';
 import { TradeParameters } from 'AppV2/Components/TradeParameters';
@@ -145,8 +145,10 @@ const TradeDesktop = observer(() => {
                             <TradeParamsFooter />
                         </div>
                     </div>
-                    {/* OnboardingGuide now only shows for mobile users */}
+                    {/* Mobile onboarding */}
                     {!guide_dtrader_v2?.trade_page && is_logged_in && <OnboardingGuide type='trade_page' />}
+                    {/* Desktop onboarding */}
+                    {!guide_dtrader_v2?.trade_page && is_logged_in && <OnboardingGuideDesktop type='trade_page' />}
                 </React.Fragment>
             ) : (
                 <Loading.DTraderV2 />
