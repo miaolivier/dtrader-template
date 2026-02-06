@@ -153,6 +153,10 @@ export const PositionsDrawerContent = observer(({ ...props }) => {
     // This ensures heights are recalculated only after translations have loaded
     const translated_stake_label = localize('Stake:');
 
+    // Memoize keyMapper to prevent unnecessary DataList recalculations
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const keyMapper = React.useCallback((row: any) => row.id, []);
+
     // Removed onMount() call - now handled at sidebar level to ensure subscription is always active
 
     React.useEffect(() => {
@@ -188,7 +192,7 @@ export const PositionsDrawerContent = observer(({ ...props }) => {
                     {...props}
                 />
             )}
-            keyMapper={row => row.id}
+            keyMapper={keyMapper}
             row_gap={8}
         />
     );
