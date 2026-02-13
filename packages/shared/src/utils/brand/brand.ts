@@ -76,6 +76,10 @@ export const getStagingPlatformHostname = () => {
     return config_data.platform.hostname.staging;
 };
 
+export const getBetaPlatformHostname = () => {
+    return config_data.platform.hostname.beta;
+};
+
 export const getPlatformUrl = () => {
     // Determine environment - use production if NODE_ENV is production, otherwise staging
     const isProduction = process.env.NODE_ENV === 'production';

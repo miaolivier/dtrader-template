@@ -7,21 +7,28 @@
  *
  */
 
-import { getProductionPlatformHostname, getStagingPlatformHostname, getWebSocketURL } from '../brand';
+import {
+    getBetaPlatformHostname,
+    getProductionPlatformHostname,
+    getStagingPlatformHostname,
+    getWebSocketURL,
+} from '../brand';
 
 export const isProduction = () => {
     const productionHostname = getProductionPlatformHostname();
     const stagingHostname = getStagingPlatformHostname();
+    const betaHostname = getBetaPlatformHostname();
 
-    // Create regex patterns for both production and staging domains (with optional www prefix)
+    // Create regex patterns for production, beta, and staging domains (with optional www prefix)
     const productionPattern = `(www\\.)?${productionHostname.replaceAll('.', '\\.')}`;
+    const betaPattern = `(www\\.)?${betaHostname.replaceAll('.', '\\.')}`;
     const stagingPattern = `(www\\.)?${stagingHostname.replaceAll('.', '\\.')}`;
 
     // Check if current hostname matches any of the supported domains
-    const supportedDomainsRegex = new RegExp(`^(${productionPattern}|${stagingPattern})$`, 'i');
+    const supportedDomainsRegex = new RegExp(`^(${productionPattern}|${betaPattern}|${stagingPattern})$`, 'i');
 
-    // Return true only if we're on the production hostname
-    const productionRegex = new RegExp(`^${productionPattern}$`, 'i');
+    // Return true if we're on the production or beta hostname
+    const productionRegex = new RegExp(`^(${productionPattern}|${betaPattern})$`, 'i');
     return supportedDomainsRegex.test(window.location.hostname) && productionRegex.test(window.location.hostname);
 };
 
