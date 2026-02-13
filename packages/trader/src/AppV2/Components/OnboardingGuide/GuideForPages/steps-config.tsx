@@ -8,7 +8,7 @@ const STEPS = [
         content: <Localize i18n_default_text='Scroll left or right to explore trade types.' />,
         offset: 0,
         spotlightPadding: 4,
-        target: '.trade__trade-types',
+        target: '.trade-container-v2__trade-types',
         title: <Localize i18n_default_text='Explore trade types (1/5)' />,
     },
     {
@@ -23,7 +23,7 @@ const STEPS = [
         content: <Localize i18n_default_text='Track market trends with our interactive charts.' />,
         spotlightPadding: 8,
         offset: 4,
-        target: '.trade__chart-tooltip',
+        target: '.trade-container-v2__chart-tooltip',
         title: <Localize i18n_default_text='Analyse with charts (3/5)' />,
         placement: 'bottom' as Step['placement'],
     },
