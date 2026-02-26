@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 
 import { Button, Checkbox, Input } from '@deriv/components';
-import { getDebugServiceWorker, getSocketURL, isProductionEnvironment } from '@deriv/shared';
+import { getDebugServiceWorker, getSocketURL, isProduction } from '@deriv/shared';
 import { observer, useStore } from '@deriv/stores';
 
 import './Devtools.scss';
@@ -121,7 +121,7 @@ const Devtools = observer(() => {
 });
 
 const ProductionSafeDevtools = observer(() => {
-    if (process.env.NODE_ENV !== 'development' || isProductionEnvironment()) return null;
+    if (process.env.NODE_ENV !== 'development' || isProduction()) return null;
     return <Devtools />;
 });
 
