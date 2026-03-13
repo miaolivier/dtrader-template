@@ -26,8 +26,8 @@
         "oauth_redirect_uri_production": "https://dtrader-template.pages.dev"
     },
     "derivws": {
-        "staging": "https://staging-api.derivws.com/trading/v1/",
-        "production": "https://api.derivws.com/trading/v1/"
+        "staging": "https://staging-api.derivws.com",
+        "production": "https://api.derivws.com"
     },
     "api_core": {
         "staging": "staging-api-core.deriv.com",

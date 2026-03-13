@@ -142,7 +142,7 @@ export const getRedirectHostname = (): string => {
 };
 
 /**
- * Gets the v4 REST API base URL (https://api.derivws.com)
+ * Gets the v4 REST API base URL (e.g. "https://api.derivws.com")
  */
 export const getApiV4BaseUrl = (): string => {
     const cfg = config_data as Record<string, unknown> & typeof config_data;
